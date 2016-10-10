@@ -6,8 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Event extends Model {
 
-    protected $primaryKey = 'id';
-    protected $table = 'events';
-    protected $fillable = array('name', 'created_at_ip', 'updated_at_ip');
-
+	public function categories() {
+		return $this->belongsToMany('App\Category')->withTimestamps();
+	}
 }
