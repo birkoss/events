@@ -13,11 +13,12 @@ class EventController extends Controller {
 
 	public function show() {
 
-		return Media::all();
+		//return Response()->json(Media::all());
 		$events = [
 			'aaa'=>'abc',
 			'bbb'=>'def'
 		];
+		return Response()->json($events);
 
 		return view('welcome')->withEvents($events);
 	}

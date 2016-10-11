@@ -18,12 +18,11 @@ class EventsTableSeeder extends Seeder {
 
 			$event->save();
 
-			for($j=1; $j<mt_rand(1, 3); $j++) {
+			$categories = App\Category::all();
+
+			for($j=1; $j<=mt_rand(0, App\Category::count()); $j++) {
 				$category = App\Category::find($j);
 				$event->categories()->save($category);
-//				$category->events()->save($event);
-
-				echo 'Event:'.$event->id.', Category:'.$category->id.chr(10);
 			}
 
 		}
