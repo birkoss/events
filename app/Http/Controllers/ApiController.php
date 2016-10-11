@@ -10,7 +10,9 @@ use App\Http\Requests;
 
 class ApiController extends Controller {
 
+
 	protected $statusCode = 200;
+
 
 	protected function respondWithCollection($collection, $transformer) {
 		$items = array();
@@ -20,13 +22,16 @@ class ApiController extends Controller {
 		return $this->respondWithArray($items);
 	}
 
+
 	protected function respondWithItem($item, $transformer) {
 		return $this->respondWithArray($this->convertToArray($item, $transformer));
 	}
 
+
 	protected function convertToArray($item, $transformer) {
 		return $transformer->transform($item);
 	}
+
 
 	protected function respondWithArray(array $array, array $headers = []) {
 		$results = ['data'=>$array];
