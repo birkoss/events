@@ -5,6 +5,7 @@ namespace App\Exceptions;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Response;
 
 class Handler extends ExceptionHandler
 {
@@ -42,9 +43,12 @@ class Handler extends ExceptionHandler
      * @param  \Exception  $exception
      * @return \Illuminate\Http\Response
      */
-    public function render($request, Exception $exception)
-    {
-        return parent::render($request, $exception);
+    public function render($request, Exception $exception) {
+			if( $request->is('api/*') ) {
+				return response()->json(['status'=>'error', 'status_code'=>Response::HTTP_BAD_REQUEST, 'message'=>$exception->getMessage()], Response::HTTP_BAD_REQUEST);
+			} else {
+				return parent::render($request, $exception);
+			}
     }
 
     /**
