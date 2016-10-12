@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers;
 
 use Exception;
+use Validator;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -12,6 +13,7 @@ class ApiController extends Controller {
 
 	protected $statusCode = 200;
 	protected $limit = 10;
+	protected $validationRules = [];
 
 
 	protected function setLimit($limit=10, $max_limit=100) {
@@ -21,6 +23,17 @@ class ApiController extends Controller {
 		}
 
 		return $this->limit;
+	}
+
+
+	protected function validateOrDie(Request $request) {
+		$validation = Validator::make($request->all(), $this->validationRules);
+
+    if( $validation->fails() ) {
+			foreach($validation->messages()->all() as $error) {
+				throw new Exception($error, 20);
+			}
+    }
 	}
 
 
