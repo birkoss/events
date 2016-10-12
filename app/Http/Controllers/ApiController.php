@@ -1,9 +1,8 @@
-<?php
+<?php namespace App\Http\Controllers;
 
-namespace App\Http\Controllers;
+use Exception;
 
 use Illuminate\Http\Request;
-
 use Illuminate\Http\Response;
 
 use App\Http\Requests;
@@ -46,10 +45,12 @@ class ApiController extends Controller {
 
 
 	protected function respondWithItem($item, $transformer) {
-		$array = array();
-//		if( !is_null($item) && is_object($item) ) {
-			$array = $this->convertToArray($item, $transformer);
-//		}
+		if( is_null($item) || !is_object($item) ) {
+			throw new Exception('Record not found', 10);
+		}
+
+		$array = $this->convertToArray($item, $transformer);
+
 		return $this->respondWithArray(['data'=>$array]);
 	}
 

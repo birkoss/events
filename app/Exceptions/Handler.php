@@ -7,8 +7,12 @@ use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Response;
 
-class Handler extends ExceptionHandler
-{
+use App\Traits\RestExceptionHandlerTrait;
+
+class Handler extends ExceptionHandler {
+
+	use RestExceptionHandlerTrait;
+
     /**
      * A list of the exception types that should not be reported.
      *
@@ -45,7 +49,8 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception) {
 			if( $request->is('api/*') ) {
-				return response()->json(['status'=>'error', 'status_code'=>Response::HTTP_BAD_REQUEST, 'message'=>$exception->getMessage()], Response::HTTP_BAD_REQUEST);
+				//return response()->json(['status'=>'error', 'status_code'=>Response::HTTP_BAD_REQUEST, 'message'=>$exception->getMessage()], Response::HTTP_BAD_REQUEST);
+				return $this->getJsonResponseForException($request, $exception);
 			} else {
 				return parent::render($request, $exception);
 			}
