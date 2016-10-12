@@ -11,7 +11,7 @@ use App\Transformers\CategoryTransformer;
 
 class CategoryController extends ApiController {
 	public function index() {
-		return $this->respondWithCollection(Category::all(), new CategoryTransformer);
+		return $this->respondWithCollection(Category::paginate($this->setLimit(10, 100)), new CategoryTransformer);
 	}
 
 	public function show($id) {
