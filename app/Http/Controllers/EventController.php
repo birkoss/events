@@ -7,20 +7,20 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 
 use App\Category;
+use App\Event;
 use App\Media;
+use App\Transformers\EventTransformer;
 
-class EventController extends Controller {
+class EventController extends ApiController {
 
-	public function show() {
+	public function index() {
+		return $this->respondWithCollection(Event::paginate($this->setLimit(30, 100)), new EventTransformer);
+	}
 
-		//return Response()->json(Media::all());
-		$events = [
-			'aaa'=>'abc',
-			'bbb'=>'def'
-		];
-		return Response()->json($events);
+	public function show($id) {
+		$event = Event::findOrFail($id);
 
-		return view('welcome')->withEvents($events);
+		return $this->respondWithItem($event, new EventTransformer);
 	}
 
 }

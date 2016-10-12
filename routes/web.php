@@ -14,11 +14,8 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/a', function () {
-    return view('welcome');
-});
-Route::get('/events2', 'EventController@show');
+//Route::get('/events2', 'EventController@show');
 
-Auth::routes();
+//Auth::routes();
 
-Route::get('/home', 'HomeController@index');
+//Route::get('/home', 'HomeController@index');
